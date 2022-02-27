@@ -43,23 +43,23 @@ Route::post('users/update', 'UserController@update')->name('users.update');
 
 Route::resource('qrscan', 'QrScanController');
 
-
+// Route::resource('appointments', 'AppointmentController');
 
 Route::resource('registration', 'RegistrationController');
 Route::resource('appointees', 'AppointeeController');
-Route::group(['middleware' => ['auth:appointee,teacher,user']], function() {
+Route::group(['middleware' => ['auth:appointee,teacher']], function() {
     Route::resource('appointments', 'AppointmentController');
   });
 Route::group(['middleware' => 'auth:appointee'], function () {
-    
+
     Route::view('/appointee', 'appointee');
     Route::get('myappointment', 'AppointmentController@myappointment' )->name('myappointment');
     Route::post('appointments/update', 'AppointmentController@update')->name('appointments.update');
-    
+
 });
 
 Route::group(['middleware' => 'auth:teacher'], function () {
-    
+
     Route::view('/teacher', 'teacher');
     Route::get('teacherappointment', 'AppointmentController@teacherappointment' )->name('teacherappointment');
     Route::get('showappointment', 'AppointmentController@showappointment' )->name('showappointment');
