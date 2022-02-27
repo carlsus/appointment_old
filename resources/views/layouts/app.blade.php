@@ -16,10 +16,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </head>
 <body class="hold-transition layout-top-nav text-sm">
     <div class="wrapper">
+    
     @include('layouts.nav')
         <div class="content-wrapper">
             <div class="content">
                 <div class="container">
+                    <br>
+        
                     @yield('content')
                 </div>
             </div>
@@ -28,5 +31,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     @include('layouts.scripts')
     @yield('scripts')
+</div>
 </body>
 </html>
