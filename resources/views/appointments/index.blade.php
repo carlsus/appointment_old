@@ -4,6 +4,7 @@
 
 @section('content')
 @include('appointments.form')
+@include('appointments.qr')
 <div class="card">
     <div class="card-header">
       <h3 class="card-title">Appointment</h3>
@@ -172,7 +173,7 @@ $(function () {
           if($confirm == true ){
               $.ajax({
                   type: "DELETE",
-                  url: "{{ route('teachers.store') }}"+'/'+id,
+                  url: "{{ route('appointments.store') }}"+'/'+id,
                   success: function (data) {
                       table.draw();
                       toastr.error('Record successfully deleted');
@@ -184,6 +185,13 @@ $(function () {
           }
     });
 
+    $('.data-table').on('click', '.view', function () {
+
+      var id = $(this).data("id");
+     
+      $('#qrcode').val(id);
+      $('#qrmodal').modal('show');
+    });
   });
 </script>
 @endsection

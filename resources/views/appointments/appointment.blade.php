@@ -32,7 +32,9 @@
 
     <!-- /.card-footer -->
   </div>
+  @include('appointments.qr')
 @include('appointments.menu')
+
 @endsection
 
 @section('scripts')
@@ -141,67 +143,16 @@ $(function () {
 			}
 		});
       }
-    //   $.get("{{ route('teachers.index') }}" +'/' + id +'/edit', function (data) {
-    //       $('form[name=form]')[0].reset();
-    //       $('#form').find('input,small').removeClass('is-invalid').text('');
-    //       $('#modal .modal-title').html('Edit');
-    //       $('#modal').modal('show');
-    //       $('#id').val(data.id);
-    //       $('#idnumber').val(data.idnumber);
-    //       $('#firstname').val(data.firstname);
-    //       $('#lastname').val(data.lastname);
-    //       $('#email').val(data.email);
-    //       $('#department_id').val(data.department_id);
-
-    //   });
+    
     });
-    //delete
-    // $('.data-table').on('click', '.delete', function () {
 
-    //       var id = $(this).data("id");
-    //       $confirm =confirm("Are You sure want to delete !");
 
-    //       if($confirm == true ){
-    //           $.ajax({
-    //               type: "DELETE",
-    //               url: "{{ route('teachers.store') }}"+'/'+id,
-    //               success: function (data) {
-    //                   table.draw();
-    //                   toastr.error('Record successfully deleted');
-    //               },
-    //               error: function (data) {
-    //                   console.log('Error:', data);
-    //               }
-    //           });
-    //       }
-    // });
-
+    
+    
     $('.data-table').on('click', '.decline', function () {
       var id = $(this).data("id");
-
-    //   $.ajax({
-	// 		url: "{{ url('appointments/show') }}" +'/' + id ,
-	// 		type: "PATCH",
-	// 		cache: false,
-	// 		data:{
-    //             _token:'{{ csrf_token() }}',
-	// 			id: id
-
-	// 		},
-	// 		success: function(dataResult){
-    //             dataResult = JSON.parse(dataResult);
-
-    //          if(dataResult.statusCode)
-    //          {
-    //             table.draw();
-    //             toastr.success('Appointement approved');
-    //          }
-    //          else{
-    //              alert("Internal Server Error");
-    //          }
-
-	// 		}
-	// 	});
+      
+    
     });
 
   });

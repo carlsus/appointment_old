@@ -85,11 +85,12 @@ class AppointmentController extends Controller
                 $nestedData['appointment_date_end'] = $value->appointment_date_end;
                 $nestedData['status'] = $value->status;
                 $btn='';
+                
+                    $btn.= "<a href='javascript:void(0)' data-toggle='tooltip'  data-id='".$value->id."' title='Approve' class='btn btn-default fas fa-check approve'></a>";
+                    $btn.=  "&nbsp; <a href='javascript:void(0)' data-toggle='tooltip'  data-id='".$value->id."' title='Decline' class='btn btn-danger decline fas fa-ban'></a>";
+                    // $btn.=  "&nbsp; <a href='javascript:void(0)' data-toggle='tooltip'  data-id='".$value->qr."' title='View QR Code' class='btn btn-primary view fas fa-eye'></a>";
 
-                    $btn.= "<a href='javascript:void(0)' data-toggle='tooltip'  data-id='".$value->id."' title='Approve' class='btn btn-default far fa-check approve'></a>";
-
-                    $btn.=  "&nbsp; <a href='javascript:void(0)' data-toggle='tooltip'  data-id='".$value->qr."' title='Decline' class='btn btn-danger decline fas fa-ban'></a>";
-
+   
                 $nestedData['options']=$btn;
 
 
@@ -166,8 +167,8 @@ class AppointmentController extends Controller
                 $btn='';
 
                     $btn.= "<a href='javascript:void(0)' data-toggle='tooltip'  data-id='".$value->id."' title='Edit' class='btn btn-default far fa-edit edit'></a>";
-
                     $btn.=  "&nbsp; <a href='javascript:void(0)' data-toggle='tooltip'  data-id='".$value->id."' title='Delete' class='btn btn-danger delete fas fa-trash'></a>";
+                    $btn.=  "&nbsp; <a href='javascript:void(0)' data-toggle='tooltip'  data-id='".$value->qr."' title='View QR Code' class='btn btn-primary view fas fa-eye'></a>";
 
                 $nestedData['options']=$btn;
 
@@ -217,10 +218,15 @@ class AppointmentController extends Controller
      */
     public function show($id)
     {
-        $output = Appointment::where('qr',$id)->get()->all();
+        $output = Appointment::where('qr',$id)->with('teacher')->get()->first();
+       
         $x=array(
-            'a' =>'sample'
+            'id' => $output->id,
+            'teacher_name' => $output->teacher->firstname . ' ' . $output->teacher->lastname,
+            'appointee_name' => $output->appointee->firstname . ' ' . $output->appointee->lastname,
+            'appointment_time' => $output->appointment_date_start . ' ' . $output->appointee->lastname
         );
+
         return json_encode($x);
     }
 
@@ -260,8 +266,9 @@ class AppointmentController extends Controller
      * @param  \App\Appointment  $appointment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Appointment $appointment)
+    public function destroy($id)
     {
-        //
+        Appointment::find($id)->delete();
+        return response()->json(['success'=>'Record deleted successfully.']);
     }
 }
