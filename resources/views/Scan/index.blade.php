@@ -85,9 +85,20 @@
             url: 'appointments/' + content,
 
             success:function(data){
-                $('#appointee_name').text(data.appointee_name);
-                $('#appointment_time').text(data.appointment_time);
-                $('#teacher_name').text(data.teacher_name);
+                if(data){
+                  $('#appointee_name').text(data.appointee.firstname + ' ' + data.appointee.lastname);
+                  $('#appointment_time').text(data.appointment_date_start + ' ' + data.appointment_date_end);
+                  $('#teacher_name').text(data.teacher.firstname + ' ' + data.teacher.lastname);
+                }else{
+                  $('#appointee_name').text('');
+                  $('#appointment_time').text('');
+                  $('#teacher_name').text('');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+              
+               
+              
             }
         });
 

@@ -146,9 +146,6 @@ $(function () {
     
     });
 
-
-    
-    
     $('.data-table').on('click', '.decline', function () {
       var id = $(this).data("id");
       

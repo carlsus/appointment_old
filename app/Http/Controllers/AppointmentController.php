@@ -8,6 +8,8 @@ use App\Teacher;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class AppointmentController extends Controller
 {
@@ -84,6 +86,7 @@ class AppointmentController extends Controller
                 $nestedData['appointment_date_start'] = $value->appointment_date_start;
                 $nestedData['appointment_date_end'] = $value->appointment_date_end;
                 $nestedData['status'] = $value->status;
+                $nestedData['qr'] = $value->qr;
                 $btn='';
                 
                     $btn.= "<a href='javascript:void(0)' data-toggle='tooltip'  data-id='".$value->id."' title='Approve' class='btn btn-default fas fa-check approve'></a>";
@@ -164,11 +167,12 @@ class AppointmentController extends Controller
                 $nestedData['appointment_date_start'] = $value->appointment_date_start;
                 $nestedData['appointment_date_end'] = $value->appointment_date_end;
                 $nestedData['status'] = $value->status;
+                $nestedData['qr'] = $value->qr;
                 $btn='';
 
                     $btn.= "<a href='javascript:void(0)' data-toggle='tooltip'  data-id='".$value->id."' title='Edit' class='btn btn-default far fa-edit edit'></a>";
                     $btn.=  "&nbsp; <a href='javascript:void(0)' data-toggle='tooltip'  data-id='".$value->id."' title='Delete' class='btn btn-danger delete fas fa-trash'></a>";
-                    $btn.=  "&nbsp; <a href='javascript:void(0)' data-toggle='tooltip'  data-id='".$value->qr."' title='View QR Code' class='btn btn-primary view fas fa-eye'></a>";
+                    // $btn.=  "&nbsp; <a href='javascript:void(0)' data-toggle='tooltip'  data-id='".$value->qr."' title='View QR Code' class='btn btn-primary view fas fa-eye'></a>";
 
                 $nestedData['options']=$btn;
 
@@ -218,16 +222,16 @@ class AppointmentController extends Controller
      */
     public function show($id)
     {
-        $output = Appointment::where('qr',$id)->with('teacher')->get()->first();
+        $output = Appointment::where('qr',$id)->with('teacher')->with('appointee')->first();
        
-        $x=array(
-            'id' => $output->id,
-            'teacher_name' => $output->teacher->firstname . ' ' . $output->teacher->lastname,
-            'appointee_name' => $output->appointee->firstname . ' ' . $output->appointee->lastname,
-            'appointment_time' => $output->appointment_date_start . ' ' . $output->appointee->lastname
-        );
-
-        return json_encode($x);
+        // $x=array(
+        //     'id' => $output->id,
+        //     'teacher_name' => $output->teacher->firstname . ' ' . $output->teacher->lastname,
+        //     'appointee_name' => $output->appointee->firstname . ' ' . $output->appointee->lastname,
+        //     'appointment_time' => $output->appointment_date_start . ' ' . $output->appointment_date_end
+        // );
+        
+        return json_encode($output);
     }
 
     /**
@@ -242,8 +246,17 @@ class AppointmentController extends Controller
     //     return response()->json($output);
     // }
     public function updateStatus($id){
+
+        $filename=Str::random(40);
+        QrCode::size(250)->generate($filename, '../public/storage/img/'. $filename . '.svg');
+        // $image = QrCode::format('png')
+        //          ->size(200)->errorCorrection('H')
+        //          ->generate($filename);
+        //         $output_file = '/img/qr-code/' . $filename . '.png';
+        //         Storage::disk('public')->put($output_file, $image); //storage/app/public/img/qr-code/img-1557309130.png
+
         $update=Appointment::find($id);
-        $update->qr=Str::random(40);
+        $update->qr=$filename;
         $update->status='Approved';
         $update->save();
         return json_encode(array('statusCode'=>200));

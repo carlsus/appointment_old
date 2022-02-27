@@ -23,6 +23,7 @@
             <th>Start</th>
             <th>End</th>
             <th>Status</th>
+            <th>QR Code</th>
             <th width="80px"></th>
           </tr>
           </thead>
@@ -78,6 +79,21 @@ $(function () {
                                 }
                             }
                         },
+                        {
+                        data: 'qr',
+                        render: function (data) {
+                        let action = '';
+
+                           if(data!=null){
+                            var file_path='/storage/img/' + data + '.svg';
+                                //action += '<a href="' + data +'" target="_blank"> <i class="fas fa-paperclip"></i> </a>';
+                                action += '<a href="' + file_path+'" target="_blank"> <i class="fas fa-paperclip"></i> View QR Code</a>';
+                           }
+                               
+                          
+                            return action;
+                        }
+                      },
             {data: 'options', name: 'options', orderable: false, searchable: false}
         ],
 
@@ -107,9 +123,11 @@ $(function () {
 
         columnDefs: [
           { width: "20%", targets: 0 },
-          { width: "25%", targets: 1 },
-          { width: "25%", targets: 2 },
-          { width: "15%", targets: 3 }
+          { width: "15%", targets: 1 },
+          { width: "15%", targets: 2 },
+          { width: "10%", targets: 3 },
+          { width: "10%", targets: 4},
+          { width: "10%", targets: 5},
         ],
     });
 
