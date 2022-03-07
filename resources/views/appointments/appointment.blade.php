@@ -82,29 +82,29 @@ $(function () {
             {data: 'options', name: 'options', orderable: false, searchable: false}
         ],
 
-        dom: "lBtipr",
-            buttons: {
-            buttons: [
-                {
-                text: "Create New Appointment",
-                    action: function(e, dt, node, config) {
-                        $('#modal .modal-title').html('New');
-                        $('#form')[0].reset();
-                        $('#form').find('input,small').removeClass('is-invalid').text('');
-                        $('#modal').modal('show');
-                    }
-                }
-            ],
-            dom: {
-                button: {
-                tag: "button",
-                className: "btn btn-default group-vertical"
-                },
-                buttonLiner: {
-                tag: null
-                }
-            }
-        },
+        // dom: "lBtipr",
+        //     buttons: {
+        //     buttons: [
+        //         {
+        //         text: "Create New Appointment",
+        //             action: function(e, dt, node, config) {
+        //                 $('#modal .modal-title').html('New');
+        //                 $('#form')[0].reset();
+        //                 $('#form').find('input,small').removeClass('is-invalid').text('');
+        //                 $('#modal').modal('show');
+        //             }
+        //         }
+        //     ],
+        //     dom: {
+        //         button: {
+        //         tag: "button",
+        //         className: "btn btn-default group-vertical"
+        //         },
+        //         buttonLiner: {
+        //         tag: null
+        //         }
+        //     }
+        // },
 
         columnDefs: [
           { width: "20%", targets: 0 },
@@ -143,13 +143,13 @@ $(function () {
 			}
 		});
       }
-    
+
     });
 
     $('.data-table').on('click', '.decline', function () {
       var id = $(this).data("id");
-      
-    
+
+
     });
 
   });

@@ -26,7 +26,7 @@
               </div>
 
             <div class="form-group">
-                <label>Date and time:</label>
+                <label>Date:</label>
                 <div class="input-group date" id="appointment_date_start" data-target-input="nearest">
                     <input type="text" class="form-control datetimepicker-input" data-target="#appointment_date_start" id="appointment_date_start" name="appointment_date_start"/>
                     <div class="input-group-append" data-target="#appointment_date_start" data-toggle="datetimepicker">
@@ -36,7 +36,7 @@
                 <small id="appointment_date_start_help" class="text-danger"></small>
             </div>
             <div class="form-group">
-
+                <label>Duration</label>
                 <div class="input-group date" id="appointment_date_end" data-target-input="nearest">
                     <input type="text" class="form-control datetimepicker-input" data-target="#appointment_date_end" id="appointment_date_end" name="appointment_date_end" />
                     <div class="input-group-append" data-target="#appointment_date_end" data-toggle="datetimepicker">

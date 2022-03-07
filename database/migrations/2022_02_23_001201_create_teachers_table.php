@@ -18,7 +18,7 @@ class CreateTeachersTable extends Migration
             $table->string('idnumber',150);
             $table->string('firstname',20);
             $table->string('lastname',20);
-            $table->string('email',150)->unique();
+            $table->string('email',200)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->unsignedBigInteger('department_id')->unsigned();
