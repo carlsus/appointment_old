@@ -78,14 +78,10 @@
 
         $.ajax({
             dataType: 'json',
-            url: 'appointments/' + content,
+            url: 'qrscan/' + content,
 
             success:function(data){
-                var start_time=moment(data.appointment_date_start, "hh:mm:ss")
 
-                        .format('hh:mm');
-                var end_time=moment(data.appointment_date_end, "hh:mm:ss")
-                        .format('hh:mm');
                 if(data){
                   $('#appointee_name').text(data.appointee.firstname + ' ' + data.appointee.lastname);
                   $('#appointment_time').text(moment(data.appointment_date_start).format('MMM D YYYY  hh:mm a') + ' to ' + moment(data.appointment_date_end).format(' hh:mm a'));

@@ -226,24 +226,7 @@ class AppointmentController extends Controller
      */
     public function show($id)
     {
-        $output = Appointment::where('qr',$id)->with('teacher')->with('appointee')->first();
-        // if  ($output->appointment_date_start <= Carbon::now('ASIA/Manila') && $output->appointment_date_end>=Carbon::now('ASIA/Manila')  ) {
-                return json_encode($output);
-        //     }else {
-        //         return json_encode(null);
-        //     }
 
-
-        // //dd(Carbon::now('ASIA/Manila')->toDateTimeString() );
-        // dd($output->appointment_date_start->toDateTimeString()  );
-        // $x=array(
-        //     'id' => $output->id,
-        //     'teacher_name' => $output->teacher->firstname . ' ' . $output->teacher->lastname,
-        //     'appointee_name' => $output->appointee->firstname . ' ' . $output->appointee->lastname,
-        //     'appointment_time' => $output->appointment_date_start . ' ' . $output->appointment_date_end
-        // );
-        //     dd($output->appointment_date_start);
-        //
     }
 
     /**
