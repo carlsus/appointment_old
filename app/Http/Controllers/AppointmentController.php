@@ -243,7 +243,7 @@ class AppointmentController extends Controller
     public function updateStatus($id){
 
         $filename=Str::random(40);
-        QrCode::size(250)->generate($filename, '../public/storage/img/'. $filename . '.svg');
+        QrCode::size(250)->generate($filename, './public/storage/img/'. $filename . '.svg');
         // $image = QrCode::format('png')
         //          ->size(200)->errorCorrection('H')
         //          ->generate($filename);

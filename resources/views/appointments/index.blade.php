@@ -194,7 +194,7 @@ $(function () {
     $('.data-table').on('click', '.view', function () {
 
       var id = $(this).data("id");
-      var file_path='/storage/img/' + id + '.svg';
+      var file_path='./public/storage/img/' + id + '.svg';
       $('#qrimage').attr('src',file_path);
       $('#qrcode').val(id);
       $('#qrmodal').modal('show');
