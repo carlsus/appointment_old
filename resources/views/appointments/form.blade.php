@@ -35,17 +35,6 @@
                 </div>
                 <small id="appointment_date_start_help" class="text-danger"></small>
             </div>
-            <div class="form-group">
-                <label>Duration</label>
-                <div class="input-group date" id="appointment_date_end" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" data-target="#appointment_date_end" id="appointment_date_end" name="appointment_date_end" />
-                    <div class="input-group-append" data-target="#appointment_date_end" data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                    </div>
-                </div>
-                <small id="appointment_date_end_help" class="text-danger"></small>
-            </div>
-
 
         </div>
         <div class="modal-footer">

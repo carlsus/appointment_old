@@ -65,4 +65,5 @@ Route::group(['middleware' => 'auth:teacher'], function () {
     Route::get('showappointment', 'AppointmentController@showappointment' )->name('showappointment');
     Route::post('appointments/show/{id}', 'AppointmentController@show' );
     Route::patch('appointments/updateStatus/{id}', 'AppointmentController@updateStatus');
+    Route::patch('appointments/rejectStatus/{id}', 'AppointmentController@rejectStatus');
 });

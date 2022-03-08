@@ -23,7 +23,6 @@
             <th>Start</th>
             <th>End</th>
             <th>Status</th>
-            <th>QR Code</th>
             <th width="80px"></th>
           </tr>
           </thead>
@@ -57,13 +56,20 @@ $(function () {
             {
                 data: 'appointment_date_start',
                 render: function (data) {
-                    return moment(data).format("DD-MMM-YYYY hh:mm A");
+                    var hr=moment(data, "HH:mm:ss")
+
+                        .format('HH:mm');
+
+                    return moment(data).format("YYYY-MM-DD") + ' ' + hr;
                 }
             },
             {
             data: 'appointment_date_end',
             render: function (data) {
-                return moment(data).format("DD-MMM-YYYY hh:mm A");
+                var hr=moment(data, "hh:mm:ss")
+
+                        .format('hh:mm');
+                        return moment(data).format("YYYY-MM-DD") + ' ' + hr;
             }
             },
 
@@ -79,21 +85,7 @@ $(function () {
                                 }
                             }
                         },
-                        {
-                        data: 'qr',
-                        render: function (data) {
-                        let action = '';
 
-                           if(data!=null){
-                            var file_path='/storage/img/' + data + '.svg';
-                                //action += '<a href="' + data +'" target="_blank"> <i class="fas fa-paperclip"></i> </a>';
-                                action += '<a href="' + file_path+'" target="_blank"> <i class="fas fa-paperclip"></i> View QR Code</a>';
-                           }
-                               
-                          
-                            return action;
-                        }
-                      },
             {data: 'options', name: 'options', orderable: false, searchable: false}
         ],
 
@@ -126,8 +118,8 @@ $(function () {
           { width: "15%", targets: 1 },
           { width: "15%", targets: 2 },
           { width: "10%", targets: 3 },
-          { width: "10%", targets: 4},
-          { width: "10%", targets: 5},
+          { width: "15%", targets: 4},
+
         ],
     });
 
@@ -206,7 +198,8 @@ $(function () {
     $('.data-table').on('click', '.view', function () {
 
       var id = $(this).data("id");
-     
+      var file_path='/storage/img/' + id + '.svg';
+      $('#qrimage').attr('src',file_path);
       $('#qrcode').val(id);
       $('#qrmodal').modal('show');
     });

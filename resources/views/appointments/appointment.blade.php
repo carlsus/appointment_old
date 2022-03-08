@@ -57,14 +57,22 @@ $(function () {
             {
                 data: 'appointment_date_start',
                 render: function (data) {
-                    return moment(data).format("DD-MMM-YYYY hh:mm A");
+                    var hr=moment(data, "hh:mm:ss")
+
+                        .format('hh:mm');
+
+                    return moment(data).format("YYYY-MM-DD") + ' ' + hr;
                 }
             },
             {
-            data: 'appointment_date_end',
-            render: function (data) {
-                return moment(data).format("DD-MMM-YYYY hh:mm A");
-            }
+                data: 'appointment_date_end',
+                render: function (data) {
+                    var hr=moment(data, "hh:mm:ss")
+
+                        .format('hh:mm');
+
+                    return moment(data).format("YYYY-MM-DD") + ' ' + hr;
+                }
             },
 
             {
@@ -116,7 +124,7 @@ $(function () {
     //approve
     $('.data-table').on('click', '.approve', function () {
       var id = $(this).data("id");
-      let isExecuted = confirm("Are you sure to execute this action?");
+      let isExecuted = confirm("Are you sure to approve this appointment?");
 
       if(isExecuted==true){
         $.ajax({
@@ -134,7 +142,7 @@ $(function () {
              if(dataResult.statusCode)
              {
                 table.draw();
-                toastr.success('Appointement approved');
+                toastr.success('Appointeent approved');
              }
              else{
                  alert("Internal Server Error");
@@ -149,7 +157,33 @@ $(function () {
     $('.data-table').on('click', '.decline', function () {
       var id = $(this).data("id");
 
+      let isExecuted = confirm("Are you sure to reject this appointment?");
 
+        if(isExecuted==true){
+        $.ajax({
+            url: "{{ url('appointments/rejectStatus') }}" +'/' + id ,
+            type: "PATCH",
+            cache: false,
+            data:{
+                _token:'{{ csrf_token() }}',
+                id: id
+
+            },
+            success: function(dataResult){
+                dataResult = JSON.parse(dataResult);
+
+            if(dataResult.statusCode)
+            {
+                table.draw();
+                toastr.error('Appointement rejected');
+            }
+            else{
+                alert("Internal Server Error");
+            }
+
+            }
+        });
+        }
     });
 
   });

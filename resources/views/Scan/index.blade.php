@@ -17,13 +17,13 @@
   <body>
 
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-2 offset-2">
       </div>
           <div class="col-md-8">
             <video id="preview"></video>
 
           </div>
-          <div class="col-md-2">
+          <div class="col-md-1">
           </div>
     </div>
 
@@ -81,9 +81,14 @@
             url: 'appointments/' + content,
 
             success:function(data){
+                var start_time=moment(data.appointment_date_start, "hh:mm:ss")
+
+                        .format('hh:mm');
+                var end_time=moment(data.appointment_date_end, "hh:mm:ss")
+                        .format('hh:mm');
                 if(data){
                   $('#appointee_name').text(data.appointee.firstname + ' ' + data.appointee.lastname);
-                  $('#appointment_time').text(data.appointment_date_start + ' ' + data.appointment_date_end);
+                  $('#appointment_time').text(start_time + ' to ' + end_time);
                   $('#teacher_name').text(data.teacher.firstname + ' ' + data.teacher.lastname);
                 }else{
                   $('#appointee_name').text('');

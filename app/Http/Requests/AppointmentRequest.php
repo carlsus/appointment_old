@@ -25,7 +25,6 @@ class AppointmentRequest extends FormRequest
     {
         return [
             'appointment_date_start' => 'required',
-            'appointment_date_end' => 'required',
             'appointee_id' => 'required|exists:appointees,id',
             'teacher_id' => 'required|exists:teachers,id',
         ];
@@ -35,7 +34,6 @@ class AppointmentRequest extends FormRequest
     {
         return [
             'appointment_date_start' => 'Appointment Start Date',
-            'appointment_date_end' => 'Appointment End Date',
             'teacher_id' => 'Teacher',
         ];
     }

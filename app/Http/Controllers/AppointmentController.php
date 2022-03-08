@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Appointment;
 use App\Http\Requests\AppointmentRequest;
 use App\Teacher;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -88,12 +89,12 @@ class AppointmentController extends Controller
                 $nestedData['status'] = $value->status;
                 $nestedData['qr'] = $value->qr;
                 $btn='';
-                
+
                     $btn.= "<a href='javascript:void(0)' data-toggle='tooltip'  data-id='".$value->id."' title='Approve' class='btn btn-default fas fa-check approve'></a>";
                     $btn.=  "&nbsp; <a href='javascript:void(0)' data-toggle='tooltip'  data-id='".$value->id."' title='Decline' class='btn btn-danger decline fas fa-ban'></a>";
                     // $btn.=  "&nbsp; <a href='javascript:void(0)' data-toggle='tooltip'  data-id='".$value->qr."' title='View QR Code' class='btn btn-primary view fas fa-eye'></a>";
 
-   
+
                 $nestedData['options']=$btn;
 
 
@@ -164,15 +165,15 @@ class AppointmentController extends Controller
             {
 
                 $nestedData['teacher_name'] = $value->teacher->firstname . ' ' . $value->teacher->lastname;
-                $nestedData['appointment_date_start'] = $value->appointment_date_start;
-                $nestedData['appointment_date_end'] = $value->appointment_date_end;
+                $nestedData['appointment_date_start'] = Carbon::parse(date_format($value->appointment_date_start,'d/m/Y H:i:s'));
+                $nestedData['appointment_date_end'] = Carbon::parse(date_format($value->appointment_date_end,'d/m/Y H:i:s'));
                 $nestedData['status'] = $value->status;
                 $nestedData['qr'] = $value->qr;
                 $btn='';
 
                     $btn.= "<a href='javascript:void(0)' data-toggle='tooltip'  data-id='".$value->id."' title='Edit' class='btn btn-default far fa-edit edit'></a>";
                     $btn.=  "&nbsp; <a href='javascript:void(0)' data-toggle='tooltip'  data-id='".$value->id."' title='Delete' class='btn btn-danger delete fas fa-trash'></a>";
-                    // $btn.=  "&nbsp; <a href='javascript:void(0)' data-toggle='tooltip'  data-id='".$value->qr."' title='View QR Code' class='btn btn-primary view fas fa-eye'></a>";
+                     $btn.=  "&nbsp; <a href='javascript:void(0)' data-toggle='tooltip'  data-id='".$value->qr."' title='View QR Code' class='btn btn-primary view fas fa-eye'></a>";
 
                 $nestedData['options']=$btn;
 
@@ -210,6 +211,9 @@ class AppointmentController extends Controller
      */
     public function store(AppointmentRequest $request)
     {
+        $date = Carbon::parse($request['appointment_date_start'])->addHour();
+
+        $request['appointment_date_end']=$date;
         $request->user()->appointment()->create($request->all());
         return response()->json(['success'=>'Data saved successfully.']);
     }
@@ -223,15 +227,23 @@ class AppointmentController extends Controller
     public function show($id)
     {
         $output = Appointment::where('qr',$id)->with('teacher')->with('appointee')->first();
-       
+        // if  ($output->appointment_date_start <= Carbon::now('ASIA/Manila') && $output->appointment_date_end>=Carbon::now('ASIA/Manila')  ) {
+                return json_encode($output);
+        //     }else {
+        //         return json_encode(null);
+        //     }
+
+
+        // //dd(Carbon::now('ASIA/Manila')->toDateTimeString() );
+        // dd($output->appointment_date_start->toDateTimeString()  );
         // $x=array(
         //     'id' => $output->id,
         //     'teacher_name' => $output->teacher->firstname . ' ' . $output->teacher->lastname,
         //     'appointee_name' => $output->appointee->firstname . ' ' . $output->appointee->lastname,
         //     'appointment_time' => $output->appointment_date_start . ' ' . $output->appointment_date_end
         // );
-        
-        return json_encode($output);
+        //     dd($output->appointment_date_start);
+        //
     }
 
     /**
@@ -258,6 +270,17 @@ class AppointmentController extends Controller
         $update=Appointment::find($id);
         $update->qr=$filename;
         $update->status='Approved';
+        $update->save();
+        return json_encode(array('statusCode'=>200));
+    }
+
+    public function rejectStatus($id){
+
+
+
+        $update=Appointment::find($id);
+        $update->qr=null;
+        $update->status='Rejected';
         $update->save();
         return json_encode(array('statusCode'=>200));
     }

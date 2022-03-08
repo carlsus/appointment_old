@@ -22,7 +22,7 @@ class CreateAppointmentsTable extends Migration
             $table->unsignedBigInteger('teacher_id')->unsigned();
             $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
             $table->string('qr')->nullable();
-            $table->enum('status', ['Pending','Approved', 'Decline']);
+            $table->enum('status', ['Pending','Approved', 'Rejected']);
             $table->timestamps();
         });
     }

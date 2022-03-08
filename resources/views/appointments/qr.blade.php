@@ -9,12 +9,12 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        
+
         <form id="form" name="form">
           <input type="hidden" value="0" id="qrcode" name="qrcode">
           @csrf
         <div class="modal-body text-center">
-          {!! QrCode::size(250)->generate('M5Y2jwspcMnOdAFm9vH32pBeMwhIXv9UKJnwA6yD'); !!}
+          <img src="" id="qrimage" name="qrimage"/>
 
 
         </div>
