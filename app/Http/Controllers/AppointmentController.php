@@ -165,8 +165,8 @@ class AppointmentController extends Controller
             {
 
                 $nestedData['teacher_name'] = $value->teacher->firstname . ' ' . $value->teacher->lastname;
-                $nestedData['appointment_date_start'] = Carbon::parse(date_format($value->appointment_date_start,'d/m/Y H:i:s'));
-                $nestedData['appointment_date_end'] = Carbon::parse(date_format($value->appointment_date_end,'d/m/Y H:i:s'));
+                $nestedData['appointment_date_start'] = $value->appointment_date_start;
+                $nestedData['appointment_date_end'] = $value->appointment_date_end;
                 $nestedData['status'] = $value->status;
                 $nestedData['qr'] = $value->qr;
                 $btn='';

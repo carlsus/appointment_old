@@ -88,7 +88,7 @@
                         .format('hh:mm');
                 if(data){
                   $('#appointee_name').text(data.appointee.firstname + ' ' + data.appointee.lastname);
-                  $('#appointment_time').text(start_time + ' to ' + end_time);
+                  $('#appointment_time').text(moment(data.appointment_date_start).format('MMM D YYYY  hh:mm a') + ' to ' + moment(data.appointment_date_end).format(' hh:mm a'));
                   $('#teacher_name').text(data.teacher.firstname + ' ' + data.teacher.lastname);
                 }else{
                   $('#appointee_name').text('');

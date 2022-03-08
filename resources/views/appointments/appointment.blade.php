@@ -57,21 +57,13 @@ $(function () {
             {
                 data: 'appointment_date_start',
                 render: function (data) {
-                    var hr=moment(data, "hh:mm:ss")
-
-                        .format('hh:mm');
-
-                    return moment(data).format("YYYY-MM-DD") + ' ' + hr;
+                    return moment(data).format('MMM D YYYY  hh:mm a');
                 }
             },
             {
                 data: 'appointment_date_end',
                 render: function (data) {
-                    var hr=moment(data, "hh:mm:ss")
-
-                        .format('hh:mm');
-
-                    return moment(data).format("YYYY-MM-DD") + ' ' + hr;
+                    return moment(data).format('MMM D YYYY  hh:mm a');
                 }
             },
 
